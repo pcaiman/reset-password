@@ -122,7 +122,8 @@
                 // Send PATCH request
                 try {
                     const response = await fetch(
-                        "https://team-duramuk-ms.fly.dev/api/users",
+                        //"https://team-duramuk-ms.fly.dev/api/users",
+                        "http://localhost:8080/api/users",
                         {
                             method: "PATCH",
                             headers: {
