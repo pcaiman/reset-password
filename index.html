@@ -4,6 +4,14 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Reset Password</title>
+        <!-- Font Awesome CDN -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+            integrity="sha512-1ycn6Ica999/+/F4yIbQkmTGk4H6zS4xHV1L3M8wEwWn1GJsyIXL3+S4FXoJ6bq9E+jrM0aHKbd2xzX5l3HDnA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
         <style>
             body {
                 background-color: #212121;
@@ -30,16 +38,6 @@
                 width: 160px;
             }
 
-            input[type="password"] {
-                width: 90%;
-                padding: 12px;
-                margin: 10px 0;
-                border: none;
-                border-radius: 5px;
-                background-color: #444;
-                color: white;
-            }
-
             button {
                 width: 50%;
                 padding: 12px;
@@ -62,6 +60,33 @@
                     padding: 20px;
                 }
             }
+
+            .input-wrapper {
+                position: relative;
+                width: 90%;
+                margin: 10px auto;
+            }
+
+            input[type="password"],
+            input[type="text"] {
+                width: 90%;
+                padding: 12px;
+                margin: 10px 0;
+                border: none;
+                border-radius: 5px;
+                background-color: #444;
+                color: white;
+            }
+
+            .toggle-password {
+                position: absolute;
+                top: 50%;
+                right: 10px;
+                transform: translateY(-50%);
+                cursor: pointer;
+                color: #ccc;
+                font-size: 18px;
+            }
         </style>
     </head>
     <body>
@@ -72,24 +97,44 @@
                 class="logo"
             />
             <form id="resetForm">
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="New Password"
-                    required
-                />
-                <input
-                    type="password"
-                    id="repeatPassword"
-                    placeholder="Repeat New Password"
-                    required
-                />
+                <div class="input-wrapper">
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="New Password"
+                        required
+                    />
+                    <i
+                        class="fa-solid fa-eye toggle-password"
+                        onclick="toggleVisibility('password', this)"
+                    ></i>
+                </div>
+                <div class="input-wrapper">
+                    <input
+                        type="password"
+                        id="repeatPassword"
+                        placeholder="Repeat New Password"
+                        required
+                    />
+                    <i
+                        class="fa-solid fa-eye toggle-password"
+                        onclick="toggleVisibility('repeatPassword', this)"
+                    ></i>
+                </div>
                 <button type="submit">Reset Password</button>
                 <div class="error" id="errorMsg"></div>
             </form>
         </div>
 
         <script>
+            function toggleVisibility(inputId, iconElement) {
+                const input = document.getElementById(inputId);
+                const isPassword = input.type === "password";
+                input.type = isPassword ? "text" : "password";
+                iconElement.classList.toggle("fa-eye");
+                iconElement.classList.toggle("fa-eye-slash");
+            }
+
             // Read URL parameters
             const urlParams = new URLSearchParams(window.location.search);
             const email = urlParams.get("email");
